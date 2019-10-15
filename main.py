@@ -9,20 +9,60 @@ def discover_IP_in_net():
 
 
 def Install_centos_packages():
-    os.system()
-
-
-def Install_ubuntu_packages():
     ip = input('Enter your machine ip')
     os.system('ssh root@' + ip)
 
     #   --Python
+    print('Installing python...')
+    os.system('sudo yum install centos-release-scl')
+    os.system('sudo yum -y install rh-python37')
+    os.system('scl enable rh-python37 bash')
+
+    #   --Docker
+    print('Installing docker...')
+    os.system('sudo yum update')
+    os.system('sudo yum install yum-utils device-mapper-persistent-data lvm2')
+    os.system('sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo')
+    os.system('sudo yum -y install docker-ce')
+    os.system('sudo systemctl start docker')
+    os.system('sudo systemctl enable docker')
+
+    #   --Ansible
+    print("Installing Ansible...")
+    os.system('sudo yum install epel-release')
+    os.system('sudo -y yum install ansible')
+
+    # Net-tools
+    print("Installing Net-Tools....")
+    os.system('yum -y install net-tools')
+
+    # etc/hosts
+    print("Update hosts file for Server...")
+    os.system('sudo -- sh -c "echo 192.168.2.1 controller >> /etc/hosts"')
+    os.system('sudo -- sh -c "echo 192.168.2.2 jenkins-master >> /etc/hosts"')
+
+    # Change root password
+    print("changing User Root Password...")
+    os.system('sudo passwd root')
+
+    # Snmp V3
+    print("Installing Snmp.... ")
+    os.system('yum -y install net-snmp net-snmp-utils')
+
+
+def Install_ubuntu_packages():
+    ip = input('Enter your machine ip')
+    os.system('ssh master@' + ip)
+
+    #   --Python
+    print('Installing python...')
     os.system('sudo apt update')
     os.system('sudo apt install software-properties-common -y')
     os.system('sudo add-apt-repository ppa:deadsnakes/ppa')
     os.system('sudo apt install python3.7')
 
     #   --Docker
+    print('Installing docker...')
     os.system('sudo apt install apt-transport-https ca-certificates curl software-properties-common')
     os.system('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
     os.system('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"')
