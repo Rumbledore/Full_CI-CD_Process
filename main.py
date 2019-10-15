@@ -52,14 +52,14 @@ def Install_centos_packages():
 
 def Install_ubuntu_packages():
     ip = input('Enter your machine ip')
-    ssh = 'systemctl --host root@' + ip
+    ssh = 'systemctl --host root@' + ip + ' '
 
     #   --Python
     print('Installing python...')
-    os.system(ssh + ' sudo apt update')
-    os.system(ssh + ' sudo apt install software-properties-common -y')
-    os.system(ssh + ' sudo add-apt-repository ppa:deadsnakes/ppa')
-    os.system(ssh + ' sudo apt install python3.7')
+    os.system(ssh + 'apt update')
+    os.system(ssh + 'apt install software-properties-common -y')
+    os.system(ssh + 'add-apt-repository ppa:deadsnakes/ppa')
+    os.system(ssh + 'apt install python3.7')
 
     # #   --Docker
     # print('Installing docker...')
