@@ -56,10 +56,10 @@ def Install_ubuntu_packages():
 
     #   --Python
     print('Installing python...')
-    os.system(ssh + 'sudo apt update')
-    os.system(ssh + 'sudo apt install software-properties-common -y')
-    os.system(ssh + 'sudo add-apt-repository ppa:deadsnakes/ppa')
-    os.system(ssh + 'sudo apt install python3.7')
+    os.system(ssh + ' sudo apt update')
+    os.system(ssh + ' sudo apt install software-properties-common -y')
+    os.system(ssh + ' sudo add-apt-repository ppa:deadsnakes/ppa')
+    os.system(ssh + ' sudo apt install python3.7')
 
     # #   --Docker
     # print('Installing docker...')
