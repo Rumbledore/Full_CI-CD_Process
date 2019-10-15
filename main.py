@@ -13,6 +13,9 @@ def Install_centos_packages():
 
 
 def Install_ubuntu_packages():
+    ip = input('Enter your machine ip')
+    os.system('ssh root@' + ip)
+
     #   --Python
     os.system('sudo apt update')
     os.system('sudo apt install software-properties-common -y')
@@ -28,14 +31,30 @@ def Install_ubuntu_packages():
     os.system('sudo apt install docker-ce -y')
 
     #   --Ansible
+    print("Installing Ansible...")
+    os.system('sudo apt update')
+    os.system('sudo apt install software-properties-common')
+    os.system('sudo apt-add-repository ppa:ansible/ansible')
+    os.system('sudo apt update')
+    os.system('sudo apt install ansible -y')
 
-    #   --Net-tools
+    # Net-tools
+    print("Installing Net-Tools....")
+    os.system('sudo apt-get install net-tools')
 
-    #   --Insert mechines names to /etc/host
+    # etc/hosts
+    print("Update hosts file for Server...")
+    os.system('sudo -- sh -c "echo 192.168.2.1 controller >> /etc/hosts"')
+    os.system('sudo -- sh -c "echo 192.168.2.2 jenkins-master >> /etc/hosts"')
 
-    #   --passwd
+    # Change root password
+    print("changing User Root Password...")
+    os.system('sudo passwd root')
 
-    #   --snmp v3
+    # Snmp V3
+    print("Installing Snmp.... ")
+    os.system('sudo apt update')
+    os.system('sudo apt install snmpd snmp libsnmp-dev -y')
 
 
 def Install_jenkins():
