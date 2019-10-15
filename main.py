@@ -9,11 +9,23 @@ def discover_IP_in_net():
 
 
 def Install_centos_packages():
-    print()
+    os.system()
 
 
 def Install_ubuntu_packages():
-    print()
+    #   --Python
+    os.system('sudo apt update')
+    os.system('sudo apt install software-properties-common -y')
+    os.system('sudo add-apt-repository ppa:deadsnakes/ppa')
+    os.system('sudo apt install python3.7')
+
+    #   --Docker
+    os.system('sudo apt install apt-transport-https ca-certificates curl software-properties-common')
+    os.system('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
+    os.system('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"')
+    os.system('sudo apt update')
+    os.system('apt-cache policy docker-ce')
+    os.system('sudo apt install docker-ce')
 
 
 def Install_jenkins():
