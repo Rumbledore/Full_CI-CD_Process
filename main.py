@@ -4,7 +4,8 @@ my_net = '192.168.2.0/24'
 
 
 def discover_IP_in_net():
-    os.system('nmap -sS -O ' + my_net)
+    os.system('sudo apt install nmap -y')
+    os.system('sudo nmap -sS -O ' + my_net)
 
 
 def Install_centos_packages():
