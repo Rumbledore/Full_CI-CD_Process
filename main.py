@@ -25,7 +25,17 @@ def Install_ubuntu_packages():
     os.system('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"')
     os.system('sudo apt update')
     os.system('apt-cache policy docker-ce')
-    os.system('sudo apt install docker-ce')
+    os.system('sudo apt install docker-ce -y')
+
+    #   --Ansible
+
+    #   --Net-tools
+
+    #   --Insert mechines names to /etc/host
+
+    #   --passwd
+
+    #   --snmp v3
 
 
 def Install_jenkins():
