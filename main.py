@@ -1,8 +1,6 @@
 import os
 import SW_installer
 
-my_net = '192.168.2.0/24'
-
 
 def enter_ip():
     ip_input = False
@@ -23,99 +21,6 @@ def enter_ip():
                     ip_input = True
     return ip_str
 
-
-def discover_IP_in_net():
-    os.system('sudo apt install nmap -y')
-    os.system('sudo nmap -sP ' + my_net)
-
-
-def Install_centos_packages():
-    ip = enter_ip()
-    installer.install_sw(ip)
-
-    #   --Python
-    print('Installing python...')
-    os.system('sudo yum install centos-release-scl')
-    os.system('sudo yum -y install rh-python37')
-    os.system('scl enable rh-python37 bash')
-
-    #   --Docker
-    print('Installing docker...')
-    os.system('sudo yum update')
-    os.system('sudo yum install yum-utils device-mapper-persistent-data lvm2')
-    os.system('sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo')
-    os.system('sudo yum -y install docker-ce')
-    os.system('sudo systemctl start docker')
-    os.system('sudo systemctl enable docker')
-
-    #   --Ansible
-    print("Installing Ansible...")
-    os.system('sudo yum install epel-release')
-    os.system('sudo -y yum install ansible')
-
-    # Net-tools
-    print("Installing Net-Tools....")
-    os.system('yum -y install net-tools')
-
-    # etc/hosts
-    print("Update hosts file for Server...")
-    os.system('sudo -- sh -c "echo 192.168.2.1 controller >> /etc/hosts"')
-    os.system('sudo -- sh -c "echo 192.168.2.2 jenkins-master >> /etc/hosts"')
-
-    # Change root password
-    print("changing User Root Password...")
-    os.system('sudo passwd root')
-
-    # Snmp V3
-    print("Installing Snmp.... ")
-    os.system('yum -y install net-snmp net-snmp-utils')
-
-
-def Install_ubuntu_packages():
-    ip = enter_ip()
-    installer.install_sw(ip)
-
-    #   --Python
-    print('Installing python...')
-    os.system('sudo apt update')
-    os.system('sudo apt install software-properties-common -y')
-    os.system('sudo add-apt-repository ppa:deadsnakes/ppa')
-    os.system('sudo apt install python3.7')
-
-    #   --Docker
-    print('Installing docker...')
-    os.system('sudo apt install apt-transport-https ca-certificates curl software-properties-common')
-    os.system('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
-    os.system('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"')
-    os.system('sudo apt update')
-    os.system('apt-cache policy docker-ce')
-    os.system('sudo apt install docker-ce -y')
-
-    #   --Ansible
-    print("Installing Ansible...")
-    os.system('sudo apt update')
-    os.system('sudo apt install software-properties-common')
-    os.system('sudo apt-add-repository ppa:ansible/ansible')
-    os.system('sudo apt update')
-    os.system('sudo apt install ansible -y')
-
-    # Net-tools
-    print("Installing Net-Tools....")
-    os.system('sudo apt-get install net-tools')
-
-    # etc/hosts
-    print("Update hosts file for Server...")
-    os.system('sudo -- sh -c "echo 192.168.2.1 controller >> /etc/hosts"')
-    os.system('sudo -- sh -c "echo 192.168.2.2 jenkins-master >> /etc/hosts"')
-
-    # Change root password
-    print("changing User Root Password...")
-    os.system('sudo passwd root')
-
-    # Snmp V3
-    print("Installing Snmp.... ")
-    os.system('sudo apt update')
-    os.system('sudo apt install snmpd snmp libsnmp-dev -y')
 
 
 def Install_jenkins():

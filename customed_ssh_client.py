@@ -13,6 +13,10 @@ class CustomedSshClient:
 
     def sendCommand(self, command):
         stdin, stdout, stderr = self.ssh.exec_command(command)
+        exit_status = stdout.channel.recv_exit_status()
+        if exit_status == 0:
+            print("Command Succeeded!")
+        print(stdout.read().decode('ascii').strip("\n"))
         return stdout.read().decode('ascii').strip("\n")
 
     def closeCconnection(self):
