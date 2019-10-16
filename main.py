@@ -183,7 +183,7 @@ def main_menu():
     menu_text()
     choice = int(input())
     if choice == 1:
-        installer.display_ips()
+        installer.display_ips(enter_ip())
     elif choice == 2:
         installer.install_centos_packages()
     elif choice == 3:
