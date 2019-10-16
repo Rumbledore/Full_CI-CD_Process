@@ -1,4 +1,5 @@
 import paramiko
+import os
 
 user = 'moshe1'
 password = 'root'
@@ -31,12 +32,10 @@ class Installer:
         self.ip = None
         self.ssh_client = None
 
-    def display_ips(self, ip):
+    def display_ips(self):
         print("\nFunction: display_ips()\n")
-        self.ip = ip
-        self.ssh_client = CustomedSshClient(ip)
-        ret_val = self.ssh_client.sendCommand('sudo apt install nmap -y')
-        ret_val = self.ssh_client.sendCommand('sudo nmap -sP ' + my_net)
+        os.system('sudo apt install nmap -y')
+        os.system('sudo nmap -sP ' + my_net)
 
     def install_sw(self, ip):
         self.ip = ip
