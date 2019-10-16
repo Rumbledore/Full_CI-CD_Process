@@ -22,11 +22,6 @@ def enter_ip():
     return ip_str
 
 
-
-def Install_jenkins():
-    print()
-
-
 def menu_text():
     print("Main Menu:".center(100))
     print("1.Discover all IP's in net".center(100))

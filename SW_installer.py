@@ -122,3 +122,6 @@ class Installer:
         # # Snmp V3
         # print("Installing Snmp.... ")
         # os.system('yum -y install net-snmp net-snmp-utils')
+
+        def Install_jenkins():
+            print()
