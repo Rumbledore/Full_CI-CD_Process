@@ -10,7 +10,7 @@ class Installer:
 
     def __init__(self):
         self.ip = None
-        self.ssh_client= None
+        self.ssh_client = None
 
     def display_ips(self):
         print("\nFunction: display_ips()\n")
@@ -42,9 +42,12 @@ class Installer:
         # Docker
         print("\nInstalling Docker....")  ##2
         ret_val = self.ssh_client.sendCommand('sudo apt update')
-        ret_val = self.ssh_client.sendCommand('sudo apt install apt-transport-https ca-certificates curl software-properties-common')
-        ret_val = self.ssh_client.sendCommand('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
-        ret_val = self.ssh_client.sendCommand('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"')
+        ret_val = self.ssh_client.sendCommand(
+            'sudo apt install apt-transport-https ca-certificates curl software-properties-common')
+        ret_val = self.ssh_client.sendCommand(
+            'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
+        ret_val = self.ssh_client.sendCommand(
+            'sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"')
         ret_val = self.ssh_client.sendCommand('sudo apt update')
         ret_val = self.ssh_client.sendCommand('apt-cache policy docker-ce')
         ret_val = self.ssh_client.sendCommand('sudo apt install docker-ce -y')
@@ -81,8 +84,7 @@ class Installer:
         ret_val = self.ssh_client.sendCommand('sudo apt install snmpd snmp libsnmp-dev -y')
         print("\n FINISH Snmp V3 Installation! =]")
 
-
-    def Install_centos_packages():
+    def Install_centos_packages(self):
         print()
         #   --Python
         # print('Installing python...')

@@ -40,11 +40,11 @@ def main_menu():
     menu_text()
     choice = int(input())
     if choice == 1:
-        discover_IP_in_net()
+        SW_installer.Installer.display_ips()
     elif choice == 2:
-        Install_centos_packages()
+        SW_installer.Installer.Install_centos_packages()
     elif choice == 3:
-        Install_ubuntu_packages()
+        SW_installer.Installer.install_ubuntu()
     elif choice == 4:
         Install_jenkins()
     elif choice == 5:
