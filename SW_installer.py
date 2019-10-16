@@ -14,8 +14,8 @@ class Installer:
 
     def display_ips(self):
         print("\nFunction: display_ips()\n")
-        os.system('sudo apt install nmap -y')
-        os.system('sudo nmap -sP ' + my_net)
+        ret_val = self.ssh_client.sendCommand('sudo apt install nmap -y')
+        ret_val = self.ssh_client.sendCommand('sudo nmap -sP ' + my_net)
 
     def install_sw(self, ip):
         self.ip = ip
