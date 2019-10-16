@@ -31,8 +31,10 @@ class Installer:
         self.ip = None
         self.ssh_client = None
 
-    def display_ips(self):
+    def display_ips(self, ip):
         print("\nFunction: display_ips()\n")
+        self.ip = ip
+        self.ssh_client = CustomedSshClient(ip)
         ret_val = self.ssh_client.sendCommand('sudo apt install nmap -y')
         ret_val = self.ssh_client.sendCommand('sudo nmap -sP ' + my_net)
 
@@ -192,8 +194,9 @@ def main_menu():
         return
 
 
-spaces = "-=========~~~~~~=========-".center(100)
+# Main
 
+spaces = "-=========~~~~~~=========-".center(100)
 print("\n" + spaces)
 print("--Main Script Controller--".center(100))
 print(spaces + "\n")
