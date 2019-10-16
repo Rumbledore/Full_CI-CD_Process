@@ -1,6 +1,27 @@
 import os
+import SW_installer
 
 my_net = '192.168.2.0/24'
+
+
+def enter_ip():
+    ip_input = False
+    while not ip_input:
+        ip_str = input("Enter IP address for Installation:")
+        ip_parse_str = str(ip_str)
+        octets_list = ip_parse_str.split(".")
+        if len(octets_list) != 4:
+            print("IP address  - Wrong Format  -  Should contain 4 octets")
+            continue
+        for i in range(4):
+            octet_as_num = int(octets_list[i])
+            if octet_as_num < 0 or octet_as_num > 255:
+                print("Aborting - octets value should be between 0 and 255")
+                break
+            else:
+                if i == 3:
+                    ip_input = True
+    return ip_str
 
 
 def discover_IP_in_net():
@@ -9,8 +30,8 @@ def discover_IP_in_net():
 
 
 def Install_centos_packages():
-    ip = input('Enter your machine ip')
-    # os.system('ssh master@' + ip)
+    ip = enter_ip()
+    installer.install_sw(ip)
 
     #   --Python
     print('Installing python...')
@@ -51,8 +72,8 @@ def Install_centos_packages():
 
 
 def Install_ubuntu_packages():
-    ip = input('Enter your machine ip')
-    # os.system('ssh master@' + ip)
+    ip = enter_ip()
+    installer.install_sw(ip)
 
     #   --Python
     print('Installing python...')
@@ -131,6 +152,7 @@ print("\n" + spaces)
 print("--Main Script Controller--".center(100))
 print(spaces + "\n")
 
+installer = SW_installer.Installer()
 main_menu()
 
 while True:
