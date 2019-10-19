@@ -12,7 +12,7 @@ class CustomedSshClient:
 
     def __init__(self, host_ip):
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.ssh.connect(hostname=user, username=user, password=password, look_for_keys=False)
+        self.ssh.connect(hostname=host_ip, username=user, password=password, look_for_keys=False)
 
     def sendCommand(self, command):
         stdin, stdout, stderr = self.ssh.exec_command(command)
@@ -41,7 +41,7 @@ class Installer:
         self.ip = ip
         self.ssh_client = CustomedSshClient(ip)
         print(f"\nFunction: install_sw() on IP: {self.ip}\n")
-        self.install_ubuntu()
+        # self.install_ubuntu()
         # ssh_client = customed_ssh_client.CustomedSshClient(ip)
         # ret_val = ssh_client.sendCommand('pwd')
         # print(f"Returned Value:{ret_val}")
@@ -105,48 +105,77 @@ class Installer:
         print("\n FINISH Snmp V3 Installation! =]")
 
     #TODO
-    def install_centos_packages(self):
-        print()
-        #   --Python
-        # print('Installing python...')
-        # os.system('sudo yum install centos-release-scl')
-        # os.system('sudo yum -y install rh-python37')
-        # os.system('scl enable rh-python37 bash')
-        #
-        # #   --Docker
-        # print('Installing docker...')
-        # os.system('sudo yum update')
-        # os.system('sudo yum install yum-utils device-mapper-persistent-data lvm2')
-        # os.system('sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo')
-        # os.system('sudo yum -y install docker-ce')
-        # os.system('sudo systemctl start docker')
-        # os.system('sudo systemctl enable docker')
-        #
-        # #   --Ansible
-        # print("Installing Ansible...")
-        # os.system('sudo yum install epel-release')
-        # os.system('sudo -y yum install ansible')
-        #
-        # # Net-tools
-        # print("Installing Net-Tools....")
-        # os.system('yum -y install net-tools')
-        #
-        # # etc/hosts
-        # print("Update hosts file for Server...")
-        # os.system('sudo -- sh -c "echo 192.168.2.1 controller >> /etc/hosts"')
-        # os.system('sudo -- sh -c "echo 192.168.2.2 jenkins-master >> /etc/hosts"')
-        #
-        # # Change root password
-        # print("changing User Root Password...")
-        # os.system('sudo passwd root')
-        #
-        # # Snmp V3
-        # print("Installing Snmp.... ")
-        # os.system('yum -y install net-snmp net-snmp-utils')#
+    def install_centos(self):
+        # Python 3.7
+
+        print("Installing Python....")
+        os.system('yum install gcc openssl-devel bzip2-devel libffi-devel')
+        os.system('cd /usr/src')
+        os.system('wget https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tgz')
+        os.system('tar xzf Python-3.7.4.tgz')
+        os.system('cd Python-3.7.4')
+        os.system('./configure --enable-optimizations')
+        os.system('make altinstall')
+        os.system('rm /usr/src/Python-3.7.4.tgz')
+        os.system('python3.7 -V')
+        # Docker
+        print("Installing Docker....")
+        os.system('sudo yum install -y yum-utils \
+                      device-mapper-persistent-data \
+                      lvm2')
+        os.system('sudo yum-config-manager \
+                      --add-repo \
+                      https://download.docker.com/linux/centos/docker-ce.repo')
+        os.system('sudo yum install -y docker-ce docker-ce-cli containerd.io')
+        os.system('sudo systemctl start docker')
+
+        # Ansibale
+
+        print("Installing Ansibale....")
+        os.system('yum install epel-release -y')
+        os.system('yum install ansible')
+        os.system('ansible --version')
+
+        # Net-tools
+        print("Installing Net-Tools....")
+        os.system('yum install -y net-tools')
+
+        # etc/hosts
+        print("Update hosts file for Server...")
+        os.system('echo 192.168.2.1 controller >> /etc/hosts"')
+        os.system('echo 192.168.2.2 jenkins-master >> /etc/hosts"')
+
+        # Change root password
+        print("changing User Root Password...")
+        os.system('sudo passwd root')
+
+        # Snmp V3
+        print("Installing Snmp.... ")
+        os.system('yum -y install net-snmp net-snmp-utils')
+
+        # Installation not check on centos7!!!!!
 
     #TODO
     def install_jenkins(self):
         print('installing jenkins')
+        is_master = input('Enter M for "master"/ "S" for slave')
+        if is_master == "M":
+            ret_val = self.ssh_client.sendCommand('sudo apt update')
+            ret_val = self.ssh_client.sendCommand('sudo apt install openjdk-8-jdk')
+            ret_val = self.ssh_client.sendCommand(
+                'wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -')
+            ret_val = self.ssh_client.sendCommand(
+                "sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'")
+            ret_val = self.ssh_client.sendCommand("sudo apt update")
+            ret_val = self.ssh_client.sendCommand("sudo apt install jenkins")
+        elif is_master == "S":
+            ret_val = self.ssh_client.sendCommand('sudo apt update')
+            ret_val = self.ssh_client.sendCommand('sudo apt install openjdk-8-jdk')
+            ret_val = self.ssh_client.sendCommand(
+                'wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -')
+            ret_val = self.ssh_client.sendCommand(
+                "sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'")
+        print("\n FINISH Jenkins Installation! =]")
 
 
 def enter_ip():
@@ -184,9 +213,11 @@ def main_menu():
     if choice == 1:
         installer.display_ips()
     elif choice == 2:
-        installer.install_centos_packages()
+        installer.install_sw(enter_ip())
+        installer.install_centos()
     elif choice == 3:
         installer.install_sw(enter_ip())
+        installer.install_ubuntu()
     elif choice == 4:
         installer.install_jenkins()
     elif choice == 5:
