@@ -12,7 +12,7 @@ class CustomedSshClient:
 
     def __init__(self, host_ip):
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.ssh.connect(hostname=host_ip, username=user, password=password, look_for_keys=False)
+        self.ssh.connect(hostname=user, username=user, password=password, look_for_keys=False)
 
     def sendCommand(self, command):
         stdin, stdout, stderr = self.ssh.exec_command(command)
