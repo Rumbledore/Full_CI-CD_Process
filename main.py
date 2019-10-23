@@ -1,4 +1,3 @@
-import paramiko
 import os
 
 user = 'root'
@@ -7,6 +6,7 @@ my_net = '192.168.2.0/24'
 
 
 class CustomedSshClient:
+    import paramiko
 
     ssh = paramiko.SSHClient()
 
