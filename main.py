@@ -40,7 +40,7 @@ class Installer:
     def install_sw(self, ip):
         self.ip = ip
         self.ssh_client = CustomedSshClient(ip)
-        print("\nFunction: install_sw() on IP: {self.ip}\n")
+        print(f"\nFunction: install_sw() on IP: {self.ip}\n")
         # self.install_ubuntu()
         # ssh_client = customed_ssh_client.CustomedSshClient(ip)
         # ret_val = ssh_client.sendCommand('pwd')
