@@ -37,8 +37,8 @@ class Installer:
 
     def install_sw(self, ip):
         self.ip = ip
-        user = input('enter your username')
-        password = input('enter your password')
+        user = input('enter your username\n')
+        password = input('enter your password\n')
         self.ssh_client = CustomedSshClient(ip, user, password)
         print(f"\nFunction: install_sw() on IP: {self.ip}\n")
         # ssh_client.closeCconnection()
@@ -229,7 +229,7 @@ print("--Main Script Controller--".center(100))
 print(spaces + "\n")
 
 #TODO: make sure the ip valid
-my_net = input('Enter your network ip: example 192.168.1.0')
+my_net = input('Enter your network ip: example 192.168.1.0/24\n')
 
 installer = Installer()
 main_menu()
