@@ -218,6 +218,7 @@ def main_menu():
         installer.install_sw(enter_ip())
         installer.install_ubuntu()
     elif choice == 4:
+        installer.install_sw(enter_ip())
         installer.install_jenkins()
     elif choice == 5:
         return
