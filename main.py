@@ -229,7 +229,7 @@ print("--Main Script Controller--".center(100))
 print(spaces + "\n")
 
 #TODO: make sure the ip valid
-my_net = input('Enter your network ip: example 192.168.1.0/24\n')
+#my_net = input('Enter your network ip: example 192.168.1.0/24\n')
 
 installer = Installer()
 main_menu()
