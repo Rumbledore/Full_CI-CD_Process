@@ -3,7 +3,7 @@ import os
 
 user = 'root'
 password = 'root'
-my_net = '192.168.2.0/24'
+my_net = '192.168.1.29/24'
 
 
 class CustomedSshClient:
@@ -40,7 +40,7 @@ class Installer:
     def install_sw(self, ip):
         self.ip = ip
         self.ssh_client = CustomedSshClient(ip)
-        print(f"\nFunction: install_sw() on IP: {self.ip}\n")
+        print("\nFunction: install_sw() on IP: {self.ip}\n")
         # self.install_ubuntu()
         # ssh_client = customed_ssh_client.CustomedSshClient(ip)
         # ret_val = ssh_client.sendCommand('pwd')
@@ -155,7 +155,6 @@ class Installer:
 
         # Installation not check on centos7!!!!!
 
-    #TODO
     def install_jenkins(self):
         print('installing jenkins')
         is_master = input('Enter M for "master"/ "S" for slave')
