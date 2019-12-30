@@ -1,7 +1,7 @@
 import paramiko
 import os
 
-user = 'root'
+user = 'moshe'
 password = 'root'
 my_net = '192.168.1.0/24'
 
