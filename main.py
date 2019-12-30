@@ -3,7 +3,7 @@ import os
 
 user = 'root'
 password = 'root'
-my_net = '192.168.1.29/24'
+my_net = '192.168.1.0/24'
 
 
 class CustomedSshClient:
