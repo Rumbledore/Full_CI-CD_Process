@@ -1,7 +1,6 @@
 import paramiko
 import os
 
-
 my_net = '192.168.1.0/24'
 
 
@@ -42,12 +41,6 @@ class Installer:
         password = input('enter your password')
         self.ssh_client = CustomedSshClient(ip, user, password)
         print(f"\nFunction: install_sw() on IP: {self.ip}\n")
-        # self.install_ubuntu()
-        # ssh_client = customed_ssh_client.CustomedSshClient(ip)
-        # ret_val = ssh_client.sendCommand('pwd')
-        # print(f"Returned Value:{ret_val}")
-        # ret_val = ssh_client.sendCommand('uname -r')
-        # print(f"Returned Value:{ret_val}")
         # ssh_client.closeCconnection()
 
     def install_ubuntu(self):
@@ -105,7 +98,7 @@ class Installer:
         ret_val = self.ssh_client.sendCommand('sudo apt install snmpd snmp libsnmp-dev -y')
         print("\n FINISH Snmp V3 Installation! =]")
 
-    #TODO
+    #TODO: convert to ssh instead of 'os'
     def install_centos(self):
         # Python 3.7
 
@@ -168,6 +161,7 @@ class Installer:
                 "sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'")
             ret_val = self.ssh_client.sendCommand("sudo apt update")
             ret_val = self.ssh_client.sendCommand("sudo apt install jenkins")
+            print("\n FINISH Jenkins Installation! =]")
         elif is_master == "s":
             ret_val = self.ssh_client.sendCommand('sudo apt update')
             ret_val = self.ssh_client.sendCommand('sudo apt install openjdk-8-jdk')
@@ -175,7 +169,9 @@ class Installer:
                 'wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -')
             ret_val = self.ssh_client.sendCommand(
                 "sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'")
-        print("\n FINISH Jenkins Installation! =]")
+            print("\n FINISH Jenkins Installation! =]")
+        else:
+            print('invalid input!')
 
 
 def enter_ip():
@@ -231,6 +227,9 @@ spaces = "-=========~~~~~~=========-".center(100)
 print("\n" + spaces)
 print("--Main Script Controller--".center(100))
 print(spaces + "\n")
+
+#TODO: make sure the ip valid
+my_net = input('Enter your network ip: example 192.168.1.0')
 
 installer = Installer()
 main_menu()
