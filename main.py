@@ -10,8 +10,6 @@ class CustomedSshClient:
     ssh = paramiko.SSHClient()
 
     def __init__(self, host_ip, user, password):
-        user = 'moshe'
-        password = 'root'
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         self.ssh.connect(hostname=host_ip, username=user, password=password, look_for_keys=False)
 
