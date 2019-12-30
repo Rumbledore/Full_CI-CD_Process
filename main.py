@@ -1,8 +1,7 @@
 import paramiko
 import os
 
-user = 'moshe'
-password = 'root'
+
 my_net = '192.168.1.0/24'
 
 
@@ -10,7 +9,9 @@ class CustomedSshClient:
 
     ssh = paramiko.SSHClient()
 
-    def __init__(self, host_ip):
+    def __init__(self, host_ip, user, password):
+        user = 'moshe'
+        password = 'root'
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         self.ssh.connect(hostname=host_ip, username=user, password=password, look_for_keys=False)
 
@@ -39,7 +40,9 @@ class Installer:
 
     def install_sw(self, ip):
         self.ip = ip
-        self.ssh_client = CustomedSshClient(ip)
+        user = input('enter your username')
+        password = input('enter your password')
+        self.ssh_client = CustomedSshClient(ip, user, password)
         print(f"\nFunction: install_sw() on IP: {self.ip}\n")
         # self.install_ubuntu()
         # ssh_client = customed_ssh_client.CustomedSshClient(ip)
@@ -157,8 +160,8 @@ class Installer:
 
     def install_jenkins(self):
         print('installing jenkins')
-        is_master = input('Enter M for "master"/ "S" for slave')
-        if is_master == "M":
+        is_master = input('Enter "m" for master / "s" for slave')
+        if is_master == "m":
             ret_val = self.ssh_client.sendCommand('sudo apt update')
             ret_val = self.ssh_client.sendCommand('sudo apt install openjdk-8-jdk')
             ret_val = self.ssh_client.sendCommand(
@@ -167,7 +170,7 @@ class Installer:
                 "sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'")
             ret_val = self.ssh_client.sendCommand("sudo apt update")
             ret_val = self.ssh_client.sendCommand("sudo apt install jenkins")
-        elif is_master == "S":
+        elif is_master == "s":
             ret_val = self.ssh_client.sendCommand('sudo apt update')
             ret_val = self.ssh_client.sendCommand('sudo apt install openjdk-8-jdk')
             ret_val = self.ssh_client.sendCommand(
